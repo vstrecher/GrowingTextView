@@ -99,6 +99,7 @@
     internalTextView.contentInset = UIEdgeInsetsZero;		
     internalTextView.showsHorizontalScrollIndicator = NO;
     internalTextView.text = @"-";
+    internalTextView.clipsToBounds = NO;
     [self addSubview:internalTextView];
     
     minHeight = internalTextView.frame.size.height;
@@ -413,7 +414,11 @@
     internalTextViewFrame.origin.x = contentInset.left;
     internalTextViewFrame.size.width = internalTextView.contentSize.width;
     
-    if(!CGRectEqualToRect(internalTextView.frame, internalTextViewFrame)) internalTextView.frame = internalTextViewFrame;
+    if(!CGRectEqualToRect(internalTextView.frame, internalTextViewFrame))
+    {
+        internalTextView.frame = internalTextViewFrame;
+        [internalTextView sizeToFit];
+    }
 }
 
 - (void)growDidStop
