@@ -417,8 +417,10 @@
     
     if(!CGRectEqualToRect(internalTextView.frame, internalTextViewFrame))
     {
+        internalTextView.scrollEnabled = YES;
         internalTextView.frame = internalTextViewFrame;
         [internalTextView sizeToFit];
+        [internalTextView layoutIfNeeded];
     }
 }
 
