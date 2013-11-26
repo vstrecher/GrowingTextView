@@ -417,10 +417,30 @@
     
     if(!CGRectEqualToRect(internalTextView.frame, internalTextViewFrame))
     {
-        internalTextView.scrollEnabled = YES;
+        
+        //bug workaround.
+
+        BOOL scrollEnabled = internalTextView.scrollEnabled;
+        if(!scrollEnabled && [self measureHeight] >= maxHeight)
+        {
+            internalTextView.scrollEnabled = YES;
+            internalTextView.frame = internalTextViewFrame;
+         
+        }
+        //---------
+        
         internalTextView.frame = internalTextViewFrame;
-        [internalTextView sizeToFit];
-        [internalTextView layoutIfNeeded];
+
+        //and this is continuation of workaround
+        if([self measureHeight] >= maxHeight)
+        {
+            [internalTextView sizeToFit];
+            [internalTextView layoutIfNeeded];
+            internalTextView.scrollEnabled = scrollEnabled;
+        }
+        //----------
+        
+
     }
 }
 
